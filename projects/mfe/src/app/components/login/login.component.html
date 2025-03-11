@@ -1,0 +1,16 @@
+<main class="login-container">
+  <h1 class="title">{{ msgTitle }}</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <mat-form-field appearance="fill" class="input-group">
+      <input matInput type="text" formControlName="username" name="username" placeholder="Insira seu nome de usuário:">
+      @if (loginForm.get('username')?.hasError('required')) {
+      <mat-error class="error-msg">
+        {{ msgError }}
+      </mat-error>
+      }
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+      Entrar
+    </button>
+  </form>
+</main>

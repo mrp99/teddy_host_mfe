@@ -1,0 +1,43 @@
+<mat-toolbar class="toolbar" color="primary">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon class="menu-icon">menu</mat-icon>
+  </button>
+  <img class="logo" src="assets/logo.svg" alt="logo">
+
+  <button class="btn-create-client" mat-stroked-button>
+    Criar Cliente
+  </button>
+
+  <button class="btn-logout" mat-stroked-button (click)="logout()">
+    Sair
+  </button>
+
+  <span class="user">Olá, Usuário</span>
+</mat-toolbar>
+
+<!-- Mat Drawer (Menu lateral) -->
+<mat-drawer-container class="drawer-container">
+  <mat-drawer #drawer open="true" position="start" mode="side">
+    <mat-list>
+      <mat-list-item>
+        <button mat-button routerLink="client">
+          <mat-icon>account_circle</mat-icon>
+          Clientes
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="product">
+          <mat-icon>store</mat-icon>
+          Produtos
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+
+  <!-- Conteúdo Principal -->
+  <mat-drawer-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

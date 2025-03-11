@@ -1,0 +1,92 @@
+
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  position: relative; /* Necessário para a centralização do link */
+  background-color: #d9d9d9;
+}
+
+.menu-icon {
+  margin-right: 10px; /* Distância entre o ícone e o logo */
+}
+
+.logo {
+  margin-left: 10px; /* Distância entre o ícone de menu e o logo */
+}
+
+  /* Centralizando o link "sair" */
+.btn-logout {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Centraliza o link */
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  border: none;
+  font-weight: bold;
+  border-radius: 20px;
+
+}
+
+.btn-create-client{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-125%); /* Centraliza o link */
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  border: none;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+
+.btn-logout {
+  background-color: transparent;
+  color: black;
+  margin-right: 10px; /* Espaço entre os dois botões */
+}
+
+.btn-logout:hover {
+  background-color: #ec6724;
+  color: white;
+}
+
+.btn-create-client {
+  background-color: transparent;
+  color: black;
+}
+
+.btn-create-client:hover {
+  background-color: #ec6724;
+  color: white;
+}
+
+  /* Estilo do texto do usuário à direita */
+.user {
+    margin-left: auto; /* Empurra o "Olá, Usuário" para o fim da barra */
+}
+
+
+.drawer-container {
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+mat-drawer {
+  background-color: #d9d9d9; /* Define o fundo do drawer como cinza claro */
+  width: 150px; /* Ajuste a largura do drawer se necessário */
+}
+
+mat-drawer-content {
+  flex-grow: 1;
+}
+
+.content {
+  min-height: 880px
+}
