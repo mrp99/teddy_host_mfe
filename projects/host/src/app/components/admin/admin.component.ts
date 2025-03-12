@@ -19,7 +19,7 @@ export class AdminComponent {
 
   public logout() {
     localStorage.removeItem('user');
-    window.location.href = 'http://localhost:4200/login';
+    window.location.href = 'http://localhost:49327/login';
   }
 
 }

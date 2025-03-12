@@ -1,0 +1,56 @@
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza a tabela horizontalmente */
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+table {
+  width: 80%;  /* Controla a largura da tabela */
+  margin-bottom: 20px;  /* Espaçamento abaixo da tabela */
+  border-collapse: collapse;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+
+td.mat-cell {
+  text-align: center;
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Estilo dos botões de ação */
+.btn-edit,
+.btn-del {
+  margin-right: 10px; /* Distância entre os ícones */
+  padding: 2px; /* Padding para garantir que o botão tenha o tamanho adequado */
+  background: transparent; /* Fundo transparente */
+  border: none; /* Remover borda */
+  cursor: pointer; /* Mostrar cursor como ponteiro para interação */
+}
+
+/* Alterar a cor do ícone de editar no hover */
+::ng-deep .btn-edit:hover {
+  color: green !important; /* Cor verde quando passar o mouse no botão de editar */
+}
+
+/* Alterar a cor do ícone de deletar no hover */
+.btn-del:hover {
+  color: red; /* Cor vermelha quando passar o mouse no botão de deletar */
+}
+
+/* Alterar a cor dos ícones no estado normal */
+.mat-icon {
+  color: #333; /* Cor padrão dos ícones */
+}
+

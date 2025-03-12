@@ -4,6 +4,7 @@ import { ClientListComponent } from "./components/client-list/client-list.compon
 import { ProductsComponent } from "./components/products/products.component";
 
 export const routes_host: Routes = [
+  { path: '', redirectTo: '/admin', pathMatch: 'full' },
   { path: "", component: AdminComponent },
   {
     path: 'admin', component: AdminComponent,

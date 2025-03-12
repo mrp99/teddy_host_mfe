@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const formInput = this.loginForm.get('username')?.value;
       this.authService.setUser(formInput);
-      window.location.href = 'http://localhost:58366/';
+      window.location.href = 'http://localhost:49327/';
     }
   }
 }
