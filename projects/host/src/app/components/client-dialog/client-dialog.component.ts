@@ -33,7 +33,7 @@ export class ClientDialogComponent implements OnInit {
 
 
   public onCancel(): void {
-
+    this.dialogRef.close();
   }
 
   public onSubmit(): void {

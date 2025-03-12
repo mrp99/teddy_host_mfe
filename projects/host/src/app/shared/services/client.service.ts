@@ -1,6 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Client } from '../interfaces/client.interface';
+import { HttpStatusCode } from '../enums/httpStatusCode';
+import { ERROR_MESSAGES } from '../consts/error-messages';
 
 
 @Injectable({
@@ -12,7 +15,7 @@ export class ClientService {
 
   constructor(private http: HttpClient) { }
 
-  getClients(page: number, limit: number): Observable<any> {
+  public getClients(page: number, limit: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
@@ -20,8 +23,42 @@ export class ClientService {
     return this.http.get<any>(this.apiUrl, { params });
   }
 
-  deleteClient(clientId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${clientId}`);
+  // Criar um novo cliente
+  public createClient(client: Client): Observable<Client> {
+    return this.http.post<Client>(this.apiUrl, client)
+      .pipe(catchError(this.handleError));
   }
+
+  // Atualizar um cliente existente
+  public updateClient(client: Client): Observable<Client> {
+    if (!client.id) {
+      throw new Error("Cliente precisa ter um ID para ser atualizado");
+    }
+    return this.http.put<Client>(`${this.apiUrl}/${client.id}`, client);
+  }
+
+  // Excluir um cliente
+  public deleteClient(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Tratamento de erros
+  private handleError(excepiton: HttpErrorResponse): Observable<never> {
+    let errorMessage = "Ocorreu um erro na operação";
+    if (excepiton.error instanceof ErrorEvent) {
+      errorMessage = `Erro: ${excepiton.error.message}`
+    } else {
+      const statusCode = excepiton.status as HttpStatusCode;
+      //sera que funciona?
+      if (Object.values(HttpStatusCode).includes(statusCode)) {
+        errorMessage = ERROR_MESSAGES[statusCode]
+      } else {
+        errorMessage = `Código: ${excepiton.status}, Mensagem: ${excepiton.message}`
+      }
+    }
+    return throwError(() => new Error(errorMessage));
+  }
+
 
 }
