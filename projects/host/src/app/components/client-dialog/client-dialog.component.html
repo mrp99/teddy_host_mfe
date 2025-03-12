@@ -1,0 +1,30 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h2>Criar cliente:</h2>
+    <button mat-icon-button (click)="onCancel()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-content">
+      <div class="form-group">
+        <input type="text" class="input-field" placeholder="Digite o nome:" formControlName="nome">
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="input-field" placeholder="Digite o salário:" formControlName="salario">
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="input-field" placeholder="Digite o valor da empresa:" formControlName="valorEmpresa">
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="submit" class="submit-button">
+        Criar cliente
+      </button>
+    </div>
+  </form>
+</div>

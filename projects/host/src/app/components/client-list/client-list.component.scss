@@ -1,35 +1,73 @@
 .table-container {
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  overflow-x: auto; /* Adiciona rolagem horizontal apenas quando necessário */
+  overflow-y: visible; /* Deixa o scroll vertical visível, se necessário */
+}
+
+.table-container .button-container {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Centraliza a tabela horizontalmente */
-  justify-content: center;
-  margin-top: 20px;
-  width: 100%;
+  justify-content: space-between; /* Alinha os botões no espaço disponível */
+  gap: 10px; /* Espaçamento entre os botões */
+  margin-bottom: 20px; /* Espaço entre os botões e o paginator */
+}
+
+.table-container .button-container button {
+  flex: 1; /* Faz com que os botões ocupem 100% do espaço disponível */
+  padding: 10px; /* Adiciona espaçamento interno */
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #ec6724;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table-container .button-container button:hover {
+  background-color: #b34800;
+}
+
+.table-container .button-container button:focus {
+  outline: none;
+}
+
+.table-container .button-container button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 table {
-  width: 80%;  /* Controla a largura da tabela */
-  margin-bottom: 20px;  /* Espaçamento abaixo da tabela */
-  border-collapse: collapse;
+  width: 100%; /* Faz a tabela ocupar toda a largura do contêiner */
+  max-width: 100%; /* Garante que a tabela não ultrapasse o contêiner */
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse; /* Garante que as bordas das células se juntem */
+  table-layout: auto; /* Ajusta as colunas conforme o conteúdo */
 }
 
 th.mat-header-cell {
-  text-align: center;
+  text-align: center; /* Centraliza o conteúdo no cabeçalho */
+  background-color: #1e3a8a; /* Cor de fundo azul para o cabeçalho */
+  color: white; /* Cor do texto no cabeçalho */
 }
 
-
 td.mat-cell {
-  text-align: center;
+  text-align: center; /* Centraliza o conteúdo nas células */
+  padding: 8px; /* Adiciona espaçamento nas células */
+  border: 1px solid #1e3a8a; /* Borda azul para as células */
+  background-color: #e0f2ff; /* Cor de fundo azul claro para as células */
 }
 
 mat-paginator {
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Centraliza o paginador */
   width: 100%;
   margin-top: 20px;
 }
 
-/* Estilo dos botões de ação */
 .btn-edit,
 .btn-del {
   margin-right: 10px; /* Distância entre os ícones */
@@ -38,19 +76,3 @@ mat-paginator {
   border: none; /* Remover borda */
   cursor: pointer; /* Mostrar cursor como ponteiro para interação */
 }
-
-/* Alterar a cor do ícone de editar no hover */
-::ng-deep .btn-edit:hover {
-  color: green !important; /* Cor verde quando passar o mouse no botão de editar */
-}
-
-/* Alterar a cor do ícone de deletar no hover */
-.btn-del:hover {
-  color: red; /* Cor vermelha quando passar o mouse no botão de deletar */
-}
-
-/* Alterar a cor dos ícones no estado normal */
-.mat-icon {
-  color: #333; /* Cor padrão dos ícones */
-}
-

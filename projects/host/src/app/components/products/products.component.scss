@@ -1,0 +1,38 @@
+.product-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  padding: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);  /* Efeito de sombra */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Animação suave */
+}
+
+.product-card:hover {
+  transform: translateY(-10px);  /* Efeito de flutuação no hover */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);  /* Sombra mais forte no hover */
+}
+
+mat-card-header {
+  background-color: #f5f5f5;
+}
+
+mat-expansion-panel {
+  margin-top: 10px;
+}
+
+mat-expansion-panel-header {
+  background-color: #007bff;
+  color: white;
+}
+
+button {
+  margin-top: 10px;
+}

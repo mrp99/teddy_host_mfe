@@ -1,0 +1,90 @@
+// Estilos para o componente de diálogo
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .close-button {
+    color: rgba(0, 0, 0, 0.54);
+    min-width: auto;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}
+
+.dialog-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dialog-actions {
+  padding: 0 16px 16px 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #f97316;
+  color: white;
+  padding: 12px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #ea580c;
+  }
+}
+
+// Estilos para os inputs
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+    border-color: #f97316;
+  }
+
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
