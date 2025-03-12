@@ -23,10 +23,11 @@ export class ClientListComponent implements OnInit {
 
   clients = signal<Client[]>([]);
   page: number = 1;
-  limit: number = 5;
+  limit: number = 7;
   totalRecords: number = 0;
   displayedColumns: string[] = ['select', 'name', 'salary', 'companyValuation', 'actions'];
   selectedClientsIds: Set<number> = new Set();
+  selectedClients: Set<Client> = new Set();
   private clientService = inject(ClientService);
 
   ngOnInit(): void {
@@ -51,6 +52,16 @@ export class ClientListComponent implements OnInit {
     });
   }
 
+  // Verifica se pelo menos um cliente foi selecionado
+  public isClientSelected(): boolean {
+    const condigiton = this.selectedClientsIds.size > 0;
+    if (condigiton) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   //alternar a seleção de todos os clientes
   public toggleSelectAll(event: any): void {
     if (event.checked) {
@@ -70,7 +81,6 @@ export class ClientListComponent implements OnInit {
   public isAllSelected(): boolean {
     return this.clients().length === this.selectedClientsIds.size;
   }
-
 
   //existe algum selecioando
   public isIndeterminate(): boolean {
@@ -99,12 +109,6 @@ export class ClientListComponent implements OnInit {
     this.clients.set(selectedClientsList);
   }
 
-  //retornar os clientes filtrados
-  public filteredClients(): Client[] {
-    return this.selectedClientsIds.size > 0 ?
-      this.clients().filter(client => this.selectedClientsIds.has(client.id)) :
-      this.clients();
-  }
 
   public editClient(client: Client): void {
 

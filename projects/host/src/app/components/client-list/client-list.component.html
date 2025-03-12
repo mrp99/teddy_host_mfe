@@ -54,7 +54,8 @@
   <!-- Botão de seleção -->
   <div class="button-container">
 
-    <button mat-raised-button class="btn-selected-items" (click)="showSelectedClients()">
+    <button mat-raised-button class="btn-selected-items" (click)="showSelectedClients()"
+      [disabled]="isClientSelected()">
       Clientes Selecionados
     </button>
 
