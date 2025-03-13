@@ -23,11 +23,11 @@ export class ClientListComponent implements OnInit {
 
   clients = signal<Client[]>([]);
   page: number = 1;
-  limit: number = 7;
+  limit: number = 6;
   totalRecords: number = 0;
   displayedColumns: string[] = ['select', 'name', 'salary', 'companyValuation', 'actions'];
   selectedClientsIds: Set<number> = new Set();
-  selectedClients: Set<Client> = new Set();
+
   private clientService = inject(ClientService);
 
   ngOnInit(): void {

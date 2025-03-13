@@ -1,6 +1,6 @@
 <div class="dialog-container">
   <div class="dialog-header">
-    <h2>Criar cliente:</h2>
+    <h2>{{ isEditMode ? 'Editar cliente:' : 'Criar cliente:' }}</h2>
     <button mat-icon-button (click)="onCancel()" class="close-button">
       <mat-icon>close</mat-icon>
     </button>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="submit-button">
+      <button type="submit" class="submit-button" [disabled]="isSubmitting || !clientForm.valid">
         Criar cliente
       </button>
     </div>

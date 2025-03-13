@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Client } from '../interfaces/client.interface';
+import { Client, ClientCreate } from '../interfaces/client.interface';
 import { HttpStatusCode } from '../enums/httpStatusCode';
 import { ERROR_MESSAGES } from '../consts/error-messages';
 
@@ -24,17 +24,18 @@ export class ClientService {
   }
 
   // Criar um novo cliente
-  public createClient(client: Client): Observable<Client> {
+  public createClient(client: ClientCreate): Observable<ClientCreate> {
     return this.http.post<Client>(this.apiUrl, client)
       .pipe(catchError(this.handleError));
   }
 
-  // Atualizar um cliente existente
+  // Atualizar um cliente existente e cuidado com interface
   public updateClient(client: Client): Observable<Client> {
     if (!client.id) {
-      throw new Error("Cliente precisa ter um ID para ser atualizado");
+      return throwError(() => new Error("Cliente precisa ter um ID para ser atualizado"));
     }
-    return this.http.put<Client>(`${this.apiUrl}/${client.id}`, client);
+    return this.http.put<Client>(`${this.apiUrl}/${client.id}`, client)
+      .pipe(catchError(this.handleError));
   }
 
   // Excluir um cliente
@@ -59,6 +60,5 @@ export class ClientService {
     }
     return throwError(() => new Error(errorMessage));
   }
-
 
 }
