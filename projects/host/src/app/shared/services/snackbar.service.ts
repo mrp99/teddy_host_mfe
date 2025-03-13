@@ -8,27 +8,25 @@ export class SnackbarService {
 
   constructor(private snackBar: MatSnackBar) { }
 
-  public openSnackbar(
-    message: string,
-    action: string = 'Fechar',
-    duration: number = 3000,
-    panelClass: string[] = []
-  ): void {
-    this.snackBar.open(message, action, {
-      duration: duration,
-      panelClass: panelClass,
+
+  showSuccess(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
     });
   }
 
-  public showSuccess(message: string): void {
-    this.openSnackbar(message, 'Fechar', 3000, ['success-snackbar']);
+  showError(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 3000,
+      panelClass: ['error-snackbar']
+    });
   }
 
-  public showError(message: string): void {
-    this.openSnackbar(message, 'Fechar', 3000, ['error-snackbar']);
-  }
-
-  public showWarning(message: string): void {
-    this.openSnackbar(message, 'Fechar', 3000, ['warning-snackbar']);
+  showWarning(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 3000,
+      panelClass: ['warning-snackbar']
+    });
   }
 }

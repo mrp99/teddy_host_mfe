@@ -8,22 +8,40 @@
 
   <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
     <div class="dialog-content">
-      <div class="form-group">
-        <input type="text" class="input-field" placeholder="Digite o nome:" formControlName="nome">
-      </div>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nome</mat-label>
+        <input matInput placeholder="Digite o nome" formControlName="name">
+        <mat-error *ngIf="clientForm.get('name')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <input type="text" class="input-field" placeholder="Digite o salário:" formControlName="salario">
-      </div>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Salário</mat-label>
+        <input matInput type="number" placeholder="Digite o salário" formControlName="salary">
+        <mat-error *ngIf="clientForm.get('salary')?.hasError('required')">
+          Salário é obrigatório
+        </mat-error>
+        <mat-error *ngIf="clientForm.get('salary')?.hasError('min')">
+          Salário deve ser maior que zero
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <input type="text" class="input-field" placeholder="Digite o valor da empresa:" formControlName="valorEmpresa">
-      </div>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Valor da Empresa</mat-label>
+        <input matInput type="number" placeholder="Digite o valor da empresa" formControlName="companyValuation">
+        <mat-error *ngIf="clientForm.get('companyValuation')?.hasError('required')">
+          Valor da empresa é obrigatório
+        </mat-error>
+        <mat-error *ngIf="clientForm.get('companyValuation')?.hasError('min')">
+          Valor da empresa deve ser maior que zero
+        </mat-error>
+      </mat-form-field>
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="submit-button" [disabled]="isSubmitting || !clientForm.valid">
-        Criar cliente
+      <button mat-raised-button color="primary" type="submit" [disabled]="clientForm.invalid || isSubmitting">
+        {{ isEditMode ? 'Atualizar' : 'Criar' }} cliente
       </button>
     </div>
   </form>

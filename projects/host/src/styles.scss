@@ -6,17 +6,21 @@
 }
 
 .success-snackbar {
-  background-color: green;
+  background-color: #4caf50;
   color: white;
 }
 
 .error-snackbar {
-  background-color: red;
+  background-color: #f44336;
   color: white;
 }
 
-.warning-snackbar {
-  background-color: orange;
+.info-snackbar {
+  background-color: #2196f3;
   color: white;
+}
+
+.mat-mdc-snack-bar-action {
+  color: white !important;
 }
 

@@ -1,9 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { Client, ClientCreate } from '../interfaces/client.interface';
-import { HttpStatusCode } from '../enums/httpStatusCode';
-import { ERROR_MESSAGES } from '../consts/error-messages';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { ApiResponse, Client, ClientCreate } from '../interfaces/client.interface';
 
 
 @Injectable({
@@ -13,52 +11,48 @@ export class ClientService {
 
   private apiUrl = 'https://boasorte.teddybackoffice.com.br/users';
 
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) { }
 
-  public getClients(page: number, limit: number): Observable<any> {
+  getClients(page: number = 1, limit: number = 10): Observable<Client[]> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('limit', limit.toString());
 
-    return this.http.get<any>(this.apiUrl, { params });
+    return this.http.get<ApiResponse>(this.apiUrl, { params })
+      .pipe(
+        map(response => response.clients)
+      );
   }
 
-  // Criar um novo cliente
-  public createClient(client: ClientCreate): Observable<ClientCreate> {
-    return this.http.post<Client>(this.apiUrl, client)
-      .pipe(catchError(this.handleError));
+  getClientsWithPagination(page: number = 1, limit: number = 10): Observable<ApiResponse> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+
+    return this.http.get<ApiResponse>(this.apiUrl, { params });
   }
 
-  // Atualizar um cliente existente e cuidado com interface
-  public updateClient(client: Client): Observable<Client> {
-    if (!client.id) {
-      return throwError(() => new Error("Cliente precisa ter um ID para ser atualizado"));
-    }
-    return this.http.put<Client>(`${this.apiUrl}/${client.id}`, client)
-      .pipe(catchError(this.handleError));
+  getClient(id: string): Observable<Client> {
+    const idNumber = parseInt(id);
+    return this.http.get<Client>(`${this.apiUrl}/${idNumber}`);
   }
 
-  // Excluir um cliente
-  public deleteClient(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`)
-      .pipe(catchError(this.handleError));
+  createClient(client: ClientCreate): Observable<Client> {
+    return this.http.post<Client>(this.apiUrl, client, this.httpOptions);
   }
 
-  // Tratamento de erros
-  private handleError(excepiton: HttpErrorResponse): Observable<never> {
-    let errorMessage = "Ocorreu um erro na operação";
-    if (excepiton.error instanceof ErrorEvent) {
-      errorMessage = `Erro: ${excepiton.error.message}`
-    } else {
-      const statusCode = excepiton.status as HttpStatusCode;
-      //sera que funciona?
-      if (Object.values(HttpStatusCode).includes(statusCode)) {
-        errorMessage = ERROR_MESSAGES[statusCode]
-      } else {
-        errorMessage = `Código: ${excepiton.status}, Mensagem: ${excepiton.message}`
-      }
-    }
-    return throwError(() => new Error(errorMessage));
+  updateClient(id: string, client: any): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<any>(url, client);
   }
 
+  deleteClient(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`, { responseType: 'text' });
+  }
 }

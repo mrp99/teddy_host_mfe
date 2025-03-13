@@ -1,78 +1,81 @@
-.table-container {
-  height: 100%;
-  width: 80%;
-  margin: 0 auto;
-  overflow-x: auto; /* Adiciona rolagem horizontal apenas quando necessário */
-  overflow-y: visible; /* Deixa o scroll vertical visível, se necessário */
-}
+.client-list-container {
+  padding: 20px;
 
-.table-container .button-container {
-  display: flex;
-  justify-content: space-between; /* Alinha os botões no espaço disponível */
-  gap: 10px; /* Espaçamento entre os botões */
-  margin-bottom: 20px; /* Espaço entre os botões e o paginator */
-}
+  .header-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
 
-.table-container .button-container button {
-  flex: 1; /* Faz com que os botões ocupem 100% do espaço disponível */
-  padding: 10px; /* Adiciona espaçamento interno */
-  font-size: 16px;
-  font-weight: bold;
-  background-color: #ec6724;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+    h1 {
+      margin-bottom: 16px;
+    }
 
-.table-container .button-container button:hover {
-  background-color: #b34800;
-}
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
 
-.table-container .button-container button:focus {
-  outline: none;
-}
+      button {
+        background-color: #ec6724;
+        color: white;
 
-.table-container .button-container button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
+        &:hover {
+          background-color: darken(#ec6724, 10%);
+        }
 
-table {
-  width: 100%; /* Faz a tabela ocupar toda a largura do contêiner */
-  max-width: 100%; /* Garante que a tabela não ultrapasse o contêiner */
-  margin: 0;
-  padding: 0;
-  border-collapse: collapse; /* Garante que as bordas das células se juntem */
-  table-layout: auto; /* Ajusta as colunas conforme o conteúdo */
-}
+        &:disabled {
+          background-color: rgba(#ec6724, 0.5);
+        }
+      }
+    }
+  }
 
-th.mat-header-cell {
-  text-align: center; /* Centraliza o conteúdo no cabeçalho */
-  background-color: #1e3a8a; /* Cor de fundo azul para o cabeçalho */
-  color: white; /* Cor do texto no cabeçalho */
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-td.mat-cell {
-  text-align: center; /* Centraliza o conteúdo nas células */
-  padding: 8px; /* Adiciona espaçamento nas células */
-  border: 1px solid #1e3a8a; /* Borda azul para as células */
-  background-color: #e0f2ff; /* Cor de fundo azul claro para as células */
-}
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      border: 1px solid #e0e0e0;
+      padding: 12px 16px;
+    }
 
-mat-paginator {
-  display: flex;
-  justify-content: center; /* Centraliza o paginador */
-  width: 100%;
-  margin-top: 20px;
-}
+    td {
+      border: 1px solid #e0e0e0;
+      padding: 12px 16px;
+    }
 
-.btn-edit,
-.btn-del {
-  margin-right: 10px; /* Distância entre os ícones */
-  padding: 2px; /* Padding para garantir que o botão tenha o tamanho adequado */
-  background: transparent; /* Fundo transparente */
-  border: none; /* Remover borda */
-  cursor: pointer; /* Mostrar cursor como ponteiro para interação */
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    tr:hover {
+      background-color: #f0f0f0;
+    }
+
+    .mat-column-select {
+      width: 60px;
+      text-align: center;
+    }
+
+    .mat-column-actions {
+      width: 120px;
+      text-align: center;
+    }
+  }
+
+  .paginator-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+    mat-paginator {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
 }
