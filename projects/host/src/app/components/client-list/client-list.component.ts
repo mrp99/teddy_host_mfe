@@ -159,7 +159,7 @@ export class ClientListComponent implements OnInit, AfterViewInit {
     if (confirm('Tem certeza que deseja excluir este cliente?')) {
       this.clientService.deleteClient(stringId).subscribe({
         next: () => {
-          this.allClients = this.allClients.filter(client => client.id !== stringId);
+          this.allClients = this.allClients.filter(client => client.id.toString() !== stringId);
           this.dataSource.data = this.allClients;
           this.showSnackBar('Cliente excluído com sucesso!', 'Sucesso');
         },

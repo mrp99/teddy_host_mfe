@@ -26,7 +26,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   templateUrl: './client-dialog.component.html',
   styleUrl: './client-dialog.component.scss'
 })
-export class ClientDialogComponent {
+export class ClientDialogComponent implements OnInit {
   clientForm!: FormGroup;
   isEditMode: boolean = false;
   isSubmitting: boolean = false;
@@ -37,73 +37,26 @@ export class ClientDialogComponent {
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<ClientDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  ) { }
 
-    this.clientForm = this.fb.group({
-      name: ['', [Validators.required]],
-      salary: [0, [Validators.required, Validators.min(0)]],
-      companyValuation: [0, [Validators.required, Validators.min(0)]]
-    });
-
-    if (data.isEditMode && data.client) {
-      this.isEditMode = true;
-      this.clientForm.patchValue(data.client);
-    }
+  ngOnInit(): void {
+    this.initializeForm();
   }
 
-  // ngOnInit(): void {
-  //   if (this.isEditMode && this.data.client) {
-  //     this.clientForm.patchValue({
-  //       name: this.data.client.name,
-  //       salary: this.data.client.salary,
-  //       companyValuation: this.data.client.companyValuation
-  //     });
-  //   }
-  // }
-
   onSubmit(): void {
-    if (this.clientForm.invalid || this.isSubmitting) {
-      return;
-    }
-
+    if (this.clientForm.invalid || this.isSubmitting) return;
     this.isSubmitting = true;
+    const clientData: ClientCreate = this.prepareClientData();
 
-    const clientData: ClientCreate = {
-      name: this.clientForm.value.name,
-      salary: this.clientForm.value.salary,
-      companyValuation: this.clientForm.value.companyValuation
-    };
 
-    if (this.isEditMode && this.data.client) {
-      console.log(this.data.client, clientData);
-      const id = this.data.client.id;
-      if (!id) {
-        this.showSnackBar('ID do cliente inválido', 'Erro');
-        this.isSubmitting = false;
-        return;
-      }
-      this.clientService.updateClient(id, clientData)
-        .subscribe({
-          next: () => {
-            this.dialogRef.close(true);
-          },
-          error: (error) => {
-            this.showSnackBar('Erro ao atualizar cliente. Tente novamente mais tarde.', 'Erro');
-            this.isSubmitting = false;
-          }
-        });
+    if (this.isEditMode) {
+      const clientDataWithId: Client = {
+        id: this.data.client!.id,
+        ...clientData
+      };
+      this.handleEditClient(clientDataWithId);
     } else {
-      this.clientService.createClient(clientData)
-        .subscribe({
-          next: () => {
-            this.dialogRef.close(true);
-          },
-          error: (error) => {
-            console.error('Erro ao criar cliente:', error);
-            this.showSnackBar('Erro ao criar cliente. Tente novamente mais tarde.', 'Erro');
-            this.isSubmitting = false;
-          }
-        });
+      this.handleCreateClient(clientData);
     }
   }
 
@@ -111,7 +64,59 @@ export class ClientDialogComponent {
     this.dialogRef.close(false);
   }
 
-  showSnackBar(message: string, action: string): void {
+  private initializeForm(): void {
+    this.clientForm = this.fb.group({
+      name: ['', [Validators.required]],
+      salary: [0, [Validators.required, Validators.min(0)]],
+      companyValuation: [0, [Validators.required, Validators.min(0)]]
+    });
+
+    if (this.data.isEditMode && this.data.client) {
+      this.isEditMode = true;
+      this.clientForm.patchValue(this.data.client);
+    }
+  }
+
+  private prepareClientData(): ClientCreate {
+    return {
+      name: this.clientForm.value.name,
+      salary: this.clientForm.value.salary,
+      companyValuation: this.clientForm.value.companyValuation
+    };
+  }
+
+  private handleCreateClient(clientData: ClientCreate): void {
+    this.clientService.createClient(clientData).subscribe({
+      next: () => this.closeDialog(true),
+      error: () => this.handleError('Erro ao criar cliente. Tente novamente mais tarde.')
+    });
+  }
+
+  private handleEditClient(client: Client): void {
+    const idStr = client.id.toString();
+
+    const clientDataForUpdate: ClientCreate = {
+      name: client.name,
+      salary: client.salary,
+      companyValuation: client.companyValuation
+    };
+
+    this.clientService.updateClient(idStr, clientDataForUpdate).subscribe({
+      next: () => this.closeDialog(true),
+      error: () => this.handleError('Erro ao atualizar cliente. Tente novamente mais tarde.')
+    });
+  }
+
+  private closeDialog(success: boolean): void {
+    this.dialogRef.close(success);
+  }
+
+  private handleError(message: string): void {
+    this.showSnackBar(message, 'Erro');
+    this.isSubmitting = false;
+  }
+
+  private showSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 3000,
       horizontalPosition: 'center',

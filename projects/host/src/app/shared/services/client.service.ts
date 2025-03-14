@@ -47,9 +47,9 @@ export class ClientService {
     return this.http.post<Client>(this.apiUrl, client, this.httpOptions);
   }
 
-  updateClient(id: string, client: any): Observable<any> {
+  updateClient(id: string, client: ClientCreate): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.put<any>(url, client);
+    return this.http.patch<any>(url, client);
   }
 
   deleteClient(id: string): Observable<any> {
